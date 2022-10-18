@@ -2,15 +2,15 @@ from rest_framework import serializers
 from .models import Book
 
 class BookSerializer(serializers.Serializer):
-    bid = serializers.IntegerField(primary_key=True)
+    bid = serializers.IntegerField()
     day = serializers.ListField(child = serializers.CharField(max_length=50))
 
     def create(self, validated_data):
         result = []
         for d in validated_data['day']:
             book = Book.objects.create(
-                bid = validated_data['bid'],
-                day = d
+                validated_data['bid'],
+                d
             )
 
             book.save()
